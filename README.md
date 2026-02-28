@@ -32,7 +32,6 @@ Não é necessário clonar o projeto ou instalar o Java na sua máquina! Você p
 ### 👨‍💻 Equipe
 Desenvolvido para o Workshop de Automação de Pipelines por:
 * Caio Soares
-* Nicolly Ribeiro
 * Raphael Muniz
 * Ygor Marangoni
 
