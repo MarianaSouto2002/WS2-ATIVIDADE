@@ -39,6 +39,7 @@ class VagaServiceTest {
     private ArgumentCaptor<Example<Vaga>> exampleCaptor;
 
     private VagaRequestDTO criarVagaRequestDTO() {
+        system.out.println("Criando VagaRequestDTO para teste...");
         return criarVagaRequestDTO("12345", "LinkedIn");
     }
 
