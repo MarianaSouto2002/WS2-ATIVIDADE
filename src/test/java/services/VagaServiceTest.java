@@ -165,7 +165,7 @@ class VagaServiceTest {
     class BuscarPorIdTests {
 
         @Test
-        @DisplayName("Deve retornar DTO quando ID existe")
+        @DisplayName("Deve retornar DTO quando ID existe.")
         void deveRetornarVagaPorId() {
             // Given
             String id = "uuid-123";
