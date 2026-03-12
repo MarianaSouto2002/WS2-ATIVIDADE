@@ -99,7 +99,7 @@ class VagaServiceTest {
             // Then
             assertThat(result).isNotNull();
 
-            verify(repository, times(1)).save(any(Vaga.class));
+            verify(repository, never()).save(any(Vaga.class));
 
             ArgumentCaptor<Vaga> vagaCaptor = ArgumentCaptor.forClass(Vaga.class);
             verify(repository).save(vagaCaptor.capture());
@@ -109,7 +109,7 @@ class VagaServiceTest {
             assertThat(vagaCapturada.getFonte()).isEqualTo("LinkedIn");
             assertThat(vagaCapturada.getCodigoVaga()).isEqualTo(dto.codigoVaga());
 
-            assertThat(vagaCapturada.getTitulo()).isEqualTo("Desenvolvedor Python");
+            assertThat(vagaCapturada.getTitulo()).isEqualTo("Desenvolvedor Java");
             assertThat(vagaCapturada.getEmpresa()).isEqualTo(dto.empresa());
             assertThat(vagaCapturada.getLinkCandidatura()).isEqualTo(dto.linkCandidatura());
         }
@@ -218,7 +218,7 @@ class VagaServiceTest {
 
             assertThat(result.getContent()).hasSize(1);
 
-            assertThat(result.getContent().get(0).fonte()).isEqualTo("Glassdoor");
+            assertThat(result.getContent().get(0).fonte()).isEqualTo("LinkedIn");
         }
 
         @Test
