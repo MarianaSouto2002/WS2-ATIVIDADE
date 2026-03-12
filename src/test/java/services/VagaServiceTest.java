@@ -99,7 +99,7 @@ class VagaServiceTest {
             // Then
             assertThat(result).isNotNull();
 
-            verify(repository, never()).save(any(Vaga.class));
+            verify(repository, times(1)).save(any(Vaga.class));
 
             ArgumentCaptor<Vaga> vagaCaptor = ArgumentCaptor.forClass(Vaga.class);
             verify(repository).save(vagaCaptor.capture());
@@ -131,8 +131,7 @@ class VagaServiceTest {
             assertThat(result).isNotNull();
             assertThat(result.id()).isEqualTo(vagaExistente.getId());
 
-            verify(repository, times(1)).save(any(Vaga.class));
-        }
+            verify(repository, never()).save(any(Vaga.class));        }
     }
 
     @Nested
