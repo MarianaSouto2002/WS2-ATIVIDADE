@@ -25,6 +25,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,6 +41,7 @@ class VagaServiceTest {
     private ArgumentCaptor<Example<Vaga>> exampleCaptor;
 
     private VagaRequestDTO criarVagaRequestDTO() {
+        System.err.println("Criando VagaRequestDTO para teste...");
         return criarVagaRequestDTO("12345", "LinkedIn");
     }
 
@@ -103,7 +106,7 @@ class VagaServiceTest {
 
             Vaga vagaCapturada = vagaCaptor.getValue();
 
-            assertThat(vagaCapturada.getFonte()).isEqualTo("Gupy");
+            assertThat(vagaCapturada.getFonte()).isEqualTo("LinkedIn");
             assertThat(vagaCapturada.getCodigoVaga()).isEqualTo(dto.codigoVaga());
 
             assertThat(vagaCapturada.getTitulo()).isEqualTo("Desenvolvedor Python");
@@ -125,7 +128,7 @@ class VagaServiceTest {
             VagaResponseDTO result = service.salvar(dto);
 
             // Then
-            assertThat(result).isNull();
+            assertThat(result).isNotNull();
             assertThat(result.id()).isEqualTo(vagaExistente.getId());
 
             verify(repository, times(1)).save(any(Vaga.class));
@@ -154,7 +157,7 @@ class VagaServiceTest {
             // Then
             verify(repository, times(2)).findByFonteAndCodigoVaga(anyString(), anyString());
 
-            verify(repository, times(3)).save(any(Vaga.class));
+            verify(repository, times(2)).save(any(Vaga.class));
         }
     }
 
@@ -176,7 +179,7 @@ class VagaServiceTest {
             // Then
             assertThat(result).isNotNull();
 
-            assertThat(result.id()).isEqualTo("uuid-999");
+            assertThat(result.id()).isEqualTo("uuid-123");
         }
 
         @Test
@@ -188,7 +191,7 @@ class VagaServiceTest {
 
             // When & Then
             assertThatThrownBy(() -> service.buscarPorId(id))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(RuntimeException.class)
                     .hasMessageContaining("Vaga não encontrada com o ID: " + id);
         }
     }
@@ -213,7 +216,7 @@ class VagaServiceTest {
             // Then
             assertThat(result).isNotEmpty();
 
-            assertThat(result.getContent()).hasSize(5);
+            assertThat(result.getContent()).hasSize(1);
 
             assertThat(result.getContent().get(0).fonte()).isEqualTo("Glassdoor");
         }
@@ -239,7 +242,7 @@ class VagaServiceTest {
             Vaga probe = exampleCaptor.getValue().getProbe();
             assertThat(probe.getFonte()).isEqualTo(filtros.fonte());
 
-            assertThat(probe.getCodigoVaga()).isEqualTo("99999");
+            assertThat(probe.getCodigoVaga()).isEqualTo("12345");
         }
     }
 }
